@@ -25,7 +25,7 @@
 
 Linux/wsl2
 ```bash
-curl -o https://get.docker.com/ | bash 
+curl https://get.docker.com/ | bash 
 ```
 
 ## Как собрать Docker-образ
