@@ -10,11 +10,7 @@ def main():
 
         if start_env:
             print("Запускаем Jupyter Lab...")
-
-            # Генерируем случайный токен
             token = secrets.token_hex(16)
-
-            # Получаем IP-адрес хоста из аргумента или переменной окружения, иначе используем 'localhost'
             host_ip = None
             for arg in sys.argv:
                 if arg.startswith('--host-ip='):
@@ -22,12 +18,8 @@ def main():
                     break
             if not host_ip:
                 host_ip = os.getenv('HOST_IP', 'localhost')
-
-            # Копируем текущее окружение и устанавливаем PYTHONUNBUFFERED
             env = os.environ.copy()
             env['PYTHONUNBUFFERED'] = '1'
-
-            # Запускаем Jupyter Lab
             process = subprocess.Popen(
                 ["conda", "run", "-n", "bioinfo", "jupyter", "lab",
                  "--ip=0.0.0.0", "--allow-root", "--no-browser",
@@ -53,10 +45,7 @@ def main():
             stdout_thread.start()
             stderr_thread.start()
 
-            # Выводим информацию о запуске
             print(f"Jupyter Lab запущен! Доступен по адресу: http://{host_ip}:8888/?token={token}")
-
-            # Ожидаем завершения процесса
             process.wait()
             stdout_thread.join()
             stderr_thread.join()
